@@ -1,0 +1,207 @@
+:root{box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px);
+--bg:#E8FAF7;--card:#FFFFFF;--txt:#0f3a44;--mut:#5b7f86;--pri:#14B8A6;--deep:#087E9B;--mint:#A7F3D0;--line:#d3ede8;color-scheme:light}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#0b2227;--card:#12323a;--txt:#e6fbf7;--mut:#9bc4c4;--line:#1f4650;color-scheme:dark}}
+:root[data-theme="dark"]{--bg:#0b2227;--card:#12323a;--txt:#e6fbf7;--mut:#9bc4c4;--line:#1f4650;color-scheme:dark}
+html{scroll-padding-top:env(safe-area-inset-top,0px)}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--txt);font-family:system-ui,-apple-system,"Segoe UI",sans-serif;padding-bottom:84px}
+main{max-width:640px;margin:0 auto;padding:16px}
+header{background:linear-gradient(135deg,var(--deep),var(--pri));color:#fff;padding:18px 16px;border-radius:0 0 22px 22px}
+header h1{margin:0;font-size:20px}header p{margin:2px 0 0;opacity:.85;font-size:13px}
+.hd{max-width:640px;margin:0 auto}
+.card{background:var(--card);border-radius:16px;padding:14px;margin-bottom:12px;box-shadow:0 1px 4px rgba(8,126,155,.1)}
+.stats{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.stat b{display:block;font-size:26px;color:var(--deep)}.stat span{color:var(--mut);font-size:13px}
+input,select{width:100%;padding:11px 12px;border:1px solid var(--line);border-radius:12px;background:var(--card);color:var(--txt);font-size:16px;font-family:inherit}
+label{display:block;font-size:12px;color:var(--mut);margin:10px 0 4px}
+.row{display:flex;gap:8px}.row>*{flex:1}
+.btn{border:0;border-radius:12px;padding:11px 14px;font-size:15px;font-weight:600;background:var(--pri);color:#fff;cursor:pointer}
+.btn.alt{background:var(--mint);color:#064e3b}.btn.del{background:#e11d48}.btn.ghost{background:transparent;color:var(--deep);border:1px solid var(--line)}
+.m{display:flex;align-items:center;gap:12px;cursor:pointer}
+.av{width:46px;height:46px;border-radius:50%;background:var(--mint);color:#064e3b;display:grid;place-items:center;font-weight:700;flex:none;overflow:hidden}
+.av img{width:100%;height:100%;object-fit:cover}.av.lg{width:84px;height:84px;font-size:28px;margin:0 auto 8px}
+.m h3{margin:0;font-size:16px}.m small{color:var(--mut)}
+.tag{margin-left:auto;font-size:11px;padding:3px 9px;border-radius:99px;background:var(--mint);color:#064e3b}
+.tag.Inactive{background:#fde2e4;color:#9f1239}.tag.Visitor{background:#dbeafe;color:#1e40af}
+nav{position:fixed;left:0;right:0;bottom:0;background:var(--card);border-top:1px solid var(--line);display:flex;padding:6px 4px calc(6px + env(safe-area-inset-bottom,0px));z-index:5}
+nav button{flex:1;border:0;background:none;color:var(--mut);font-size:11px;padding:4px;cursor:pointer}
+nav button span{display:block;font-size:20px}nav button.on{color:var(--deep);font-weight:700}
+.fab{position:fixed;right:16px;bottom:calc(76px + env(safe-area-inset-bottom,0px));width:54px;height:54px;border-radius:50%;font-size:28px;padding:0;box-shadow:0 4px 12px rgba(8,126,155,.4);z-index:4}
+.sheet{position:fixed;inset:0;background:rgba(0,0,0,.45);z-index:9;display:flex;align-items:flex-end;justify-content:center}
+.sheet>div{background:var(--bg);width:100%;max-width:640px;max-height:92%;overflow:auto;border-radius:22px 22px 0 0;padding:16px}
+.kv{display:flex;justify-content:space-between;padding:9px 0;border-bottom:1px solid var(--line);font-size:14px;gap:12px}
+.kv span{color:var(--mut)}.kv b{text-align:right}
+h2{font-size:17px;margin:4px 0 12px}.c{text-align:center}
+.hide{display:none!important}
+
+/* Header */
+header h1{font-size:22px;letter-spacing:.2px}
+.church{font-size:12.5px;font-weight:500;letter-spacing:.6px;opacity:.92;margin-top:3px}
+header p#sub{font-size:12px;opacity:.8;margin-top:10px;padding-top:9px;border-top:1px solid rgba(255,255,255,.25)}
+
+/* Fonts for the certificate & covenant (free look-alikes, used only if the Word fonts are not installed) */
+@font-face{font-family:'FGC Pagella';font-weight:400;src:url(fonts/pagella-regular.woff2) format('woff2')}
+@font-face{font-family:'FGC Pagella';font-weight:700;src:url(fonts/pagella-bold.woff2) format('woff2')}
+@font-face{font-family:'FGC Liberation Serif';font-weight:400;src:url(fonts/liberation-serif.woff2) format('woff2')}
+@font-face{font-family:'FGC Gelasio';font-weight:400;src:url(fonts/gelasio.woff2) format('woff2')}
+@font-face{font-family:'FGC Almendra';font-weight:400;src:url(fonts/almendra.woff2) format('woff2')}
+@font-face{font-family:'FGC Almendra';font-weight:700;src:url(fonts/almendra-bold.woff2) format('woff2')}
+@font-face{font-family:'FGC Courgette';font-weight:400;src:url(fonts/courgette.woff2) format('woff2')}
+
+/* Header v2: church name on top, "Membership Portal" underneath, live connection animation */
+header h1.church-name{margin:0;font-size:21px;font-weight:700;letter-spacing:.2px;line-height:1.25}
+header .portal{margin-top:4px;font-size:13px;font-weight:600;letter-spacing:1.6px;text-transform:uppercase;--o:.92}
+header .hd>*{animation:hdIn .6s ease both}
+header .portal{animation-delay:.12s}
+header p#sub{animation-delay:.24s;--o:.85}
+@keyframes hdIn{from{opacity:0;transform:translateY(-8px)}to{opacity:var(--o,1);transform:none}}
+.sync{display:inline-flex;align-items:center;gap:6px;padding:2px 10px 2px 8px;border-radius:99px;background:rgba(255,255,255,.16);font-weight:600;vertical-align:middle}
+.sync .cloud{display:inline-block;animation:cloudFloat 3s ease-in-out infinite}
+.sync .pulse{position:relative;width:8px;height:8px;border-radius:50%;background:#4ade80;flex:none}
+.sync .pulse::after{content:"";position:absolute;inset:0;border-radius:50%;background:#4ade80;animation:ping 1.6s ease-out infinite}
+@keyframes ping{to{transform:scale(3.2);opacity:0}}
+@keyframes cloudFloat{50%{transform:translateY(-2px)}}
+@media (prefers-reduced-motion:reduce){header .hd>*,.sync .cloud,.sync .pulse::after{animation:none}}
+
+/* Logo banner (same as the church letterhead) */
+.sr{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
+.auth-logo{display:block;width:100%;max-width:440px;height:auto;margin:0 auto 12px;background:#fff;border-radius:12px;padding:4px;animation:logoIn .7s cubic-bezier(.2,.9,.3,1.2) both}
+@keyframes logoIn{from{opacity:0;transform:translateY(-8px) scale(.96)}to{opacity:1;transform:none}}
+@media (prefers-reduced-motion:reduce){.auth-logo{animation:none}}
+
+/* Birth certificate upload */
+.bc{display:flex;align-items:center;gap:12px;margin-bottom:8px}
+.bc img{width:110px;height:78px;object-fit:cover;border-radius:10px;border:1px solid var(--line);background:#fff}
+.bc.empty{color:var(--mut);font-size:13px;padding:4px 0}
+
+/* Clean line icons for the bottom navigation */
+nav button .ni{display:grid;place-items:center;width:52px;height:30px;margin:0 auto 2px;border-radius:99px;transition:background .2s ease}
+nav button svg{width:24px;height:24px;transition:transform .2s ease}
+nav button.on .ni{background:rgba(20,184,166,.16)}
+nav button.on svg{transform:translateY(-1px) scale(1.06)}
+nav button{transition:color .2s ease}
+
+/* ===== Smooth touch: transitions, press feedback, animations ===== */
+html{scroll-behavior:smooth}
+body{-webkit-font-smoothing:antialiased;-webkit-tap-highlight-color:transparent}
+button{font-family:inherit}
+::selection{background:var(--mint);color:#064e3b}
+
+/* buttons */
+.btn{overflow:hidden;transition:transform .14s ease,box-shadow .2s ease,filter .2s ease,background .2s ease;box-shadow:0 2px 6px rgba(8,126,155,.18)}
+.btn:not(.fab){position:relative}
+.btn.ghost,.btn.alt{box-shadow:none}
+.btn:active{transform:scale(.96);filter:brightness(.96)}
+.btn:disabled{opacity:.6;cursor:default}
+.btn:focus-visible,nav button:focus-visible{outline:3px solid rgba(20,184,166,.4);outline-offset:2px}
+@media (hover:hover){
+  .btn:hover{filter:brightness(1.06);box-shadow:0 4px 12px rgba(8,126,155,.25)}
+  .btn.ghost:hover{background:rgba(20,184,166,.08)}
+  .btn.alt:hover{filter:brightness(.97)}
+}
+
+/* inputs */
+input,select{transition:border-color .2s ease,box-shadow .2s ease,background .2s ease}
+input:focus,select:focus{outline:none;border-color:var(--pri);box-shadow:0 0 0 3px rgba(20,184,166,.22)}
+
+/* cards */
+.card{transition:transform .18s ease,box-shadow .25s ease}
+.m{position:relative;overflow:hidden;-webkit-user-select:none;user-select:none}
+.m:active{transform:scale(.985)}
+@media (hover:hover){.m:hover{transform:translateY(-2px);box-shadow:0 6px 16px rgba(8,126,155,.16)}}
+
+/* press ripple */
+nav button{position:relative;overflow:hidden;border-radius:12px;transition:color .2s ease,transform .14s ease}
+nav button:active{transform:scale(.94)}
+.rip{position:absolute;border-radius:50%;background:currentColor;opacity:.22;transform:scale(0);pointer-events:none;animation:rip .55s ease-out forwards}
+@keyframes rip{to{transform:scale(1);opacity:0}}
+
+/* floating add button */
+.fab{transition:transform .2s ease,box-shadow .2s ease;animation:fabIn .5s cubic-bezier(.2,.9,.3,1.4) .2s both}
+.fab:active{transform:scale(.9) rotate(90deg)}
+@keyframes fabIn{from{transform:scale(0) rotate(-90deg);opacity:0}to{transform:none;opacity:1}}
+
+/* page change: fade, then cards rise one after another */
+#app{transition:opacity .16s ease}
+#app.leave{opacity:0}
+#app.enter{animation:pageIn .3s ease both}
+@keyframes pageIn{from{opacity:0}to{opacity:1}}
+#app.enter .card{animation:cardIn .45s cubic-bezier(.2,.8,.2,1) both}
+#app.enter .card:nth-child(2){animation-delay:.04s}
+#app.enter .card:nth-child(3){animation-delay:.08s}
+#app.enter .card:nth-child(4){animation-delay:.12s}
+#app.enter .card:nth-child(5){animation-delay:.16s}
+#app.enter .card:nth-child(6){animation-delay:.2s}
+#app.enter .card:nth-child(n+7){animation-delay:.24s}
+@keyframes cardIn{from{opacity:0;transform:translateY(14px)}to{opacity:1;transform:none}}
+
+/* pop-up sheets */
+.sheet{animation:fadeIn .22s ease both;-webkit-backdrop-filter:blur(3px);backdrop-filter:blur(3px)}
+.sheet>div{animation:sheetUp .34s cubic-bezier(.2,.9,.3,1) both;padding-bottom:calc(16px + env(safe-area-inset-bottom,0px))}
+.sheet.closing{animation:fadeOut .2s ease both;pointer-events:none}
+.sheet.closing>div{animation:sheetDown .2s ease both}
+.sheet.still,.sheet.still>div{animation:none}
+@keyframes fadeIn{from{opacity:0}to{opacity:1}}
+@keyframes fadeOut{to{opacity:0}}
+@keyframes sheetUp{from{transform:translateY(36px) scale(.98);opacity:0}to{transform:none;opacity:1}}
+@keyframes sheetDown{to{transform:translateY(36px) scale(.98);opacity:0}}
+@media (min-width:700px){.sheet{align-items:center}.sheet>div{border-radius:22px;max-height:88%}}
+
+/* member details rows */
+.kv{transition:background .2s ease}
+
+/* confirmation message */
+.toast{position:fixed;left:50%;bottom:calc(92px + env(safe-area-inset-bottom,0px));transform:translateX(-50%);background:var(--txt);color:var(--bg);padding:10px 18px;border-radius:99px;font-size:14px;font-weight:600;z-index:30;box-shadow:0 6px 18px rgba(0,0,0,.25);animation:toastIn .3s cubic-bezier(.2,.9,.3,1.2) both,toastOut .3s ease 1.9s forwards;white-space:nowrap}
+@keyframes toastIn{from{opacity:0;transform:translate(-50%,12px)}to{opacity:1;transform:translate(-50%,0)}}
+@keyframes toastOut{to{opacity:0;transform:translate(-50%,8px)}}
+
+@media (prefers-reduced-motion:reduce){
+  *,*::before,*::after{animation-duration:.01ms!important;animation-delay:0s!important;transition-duration:.01ms!important}
+}
+@media (prefers-reduced-motion:reduce){.toast{animation:none!important}}
+
+/* ===== Typography: elegant serif headings + clean spaced labels ===== */
+h1.church-name,h2{font-family:"Playfair Display",Georgia,"Times New Roman",serif}
+header h1.church-name{font-size:23px;font-weight:700;letter-spacing:.3px;line-height:1.2;text-shadow:0 1px 8px rgba(0,0,0,.15)}
+header .portal{font-family:"Montserrat",system-ui,-apple-system,"Segoe UI",sans-serif;font-size:11.5px;font-weight:600;letter-spacing:2.6px}
+h2{font-size:20px;font-weight:600;letter-spacing:.2px}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]) .auth-title{color:#5eead4}}
+@media (max-width:420px){header h1.church-name{font-size:20px}}
+
+
+/* Login title: Futura (Jost is the free look-alike for devices without Futura) */
+.auth-title{font-family:Futura,"Futura PT","Jost","Century Gothic","Trebuchet MS",sans-serif;font-size:24px;font-weight:500;letter-spacing:.6px;margin:6px 0 16px;color:var(--deep)}
+
+/* top notification */
+.toast.top{top:calc(14px + env(safe-area-inset-top,0px));bottom:auto;animation:toastTopIn .45s cubic-bezier(.2,.9,.3,1.2) both,toastTopOut .35s ease 2.8s forwards}
+@keyframes toastTopIn{from{opacity:0;transform:translate(-50%,-18px)}to{opacity:1;transform:translate(-50%,0)}}
+@keyframes toastTopOut{to{opacity:0;transform:translate(-50%,-12px)}}
+
+/* welcome animation after sign in */
+.welcome{position:fixed;inset:0;z-index:60;display:grid;place-items:center;background:linear-gradient(135deg,var(--deep),var(--pri));color:#fff;animation:fadeIn .25s ease both}
+.welcome.out{animation:fadeOut .45s ease forwards;pointer-events:none}
+.w-card{text-align:center;padding:24px}
+.w-check{width:92px;height:92px;display:block;margin:0 auto 18px;fill:none;stroke:#fff;stroke-width:2.6;stroke-linecap:round;stroke-linejoin:round;animation:wPop .6s cubic-bezier(.2,.9,.3,1.3) both}
+.w-ring{stroke-dasharray:145;stroke-dashoffset:145;animation:wDraw .7s ease .15s forwards}
+.w-tick{stroke-dasharray:40;stroke-dashoffset:40;animation:wDraw .45s ease .75s forwards}
+.w-title{font-family:Futura,"Futura PT","Jost","Century Gothic","Trebuchet MS",sans-serif;font-size:26px;font-weight:500;letter-spacing:.6px;animation:wRise .55s ease .9s both}
+.w-sub{margin-top:6px;font-size:14px;opacity:.85;animation:wRise .55s ease 1.05s both}
+@keyframes wDraw{to{stroke-dashoffset:0}}
+@keyframes wPop{from{transform:scale(.6);opacity:0}to{transform:none;opacity:1}}
+@keyframes wRise{from{opacity:0;transform:translateY(12px)}to{opacity:1;transform:none}}
+@media (prefers-reduced-motion:reduce){.w-ring,.w-tick{stroke-dashoffset:0!important}.w-title,.w-sub,.w-check{opacity:1!important}}
+
+.brand{display:block}
+.brand-txt{min-width:0}
+
+/* Logo watermark on the home page */
+.wm{position:fixed;left:50%;top:50%;width:min(78vw,540px);height:auto;transform:translate(-50%,-52%);opacity:0;pointer-events:none;-webkit-user-select:none;user-select:none;z-index:0;transition:opacity .7s ease}
+body.show-wm .wm{opacity:.09}
+header{position:relative;z-index:2}
+main{position:relative;z-index:1}
+body.show-wm .card{background:color-mix(in srgb,var(--card) 82%,transparent)}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]) .wm{filter:brightness(0) invert(1)}:root:not([data-theme="light"]) body.show-wm .wm{opacity:.08}}
+:root[data-theme="dark"] .wm{filter:brightness(0) invert(1)}
+/* goodbye animation after log out */
+.welcome.bye{background:linear-gradient(135deg,var(--pri),var(--deep))}
+.welcome.bye .w-tick{animation-duration:.6s}
