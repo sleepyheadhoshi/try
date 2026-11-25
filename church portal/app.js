@@ -27,7 +27,7 @@ const recs = { dedication: [], baptism: [] }, rq = { dedication: '', baptism: ''
 let rsel = null, rform = null, rconfirm = false, recErr = '';
 async function loadRecs() {
   recErr = '';
-  for (const k in REC) { const { data, error } = await sb.from(REC[k].table).select('*'); if (error) recErr = error.message + ' (run supabase-records.sql in Supabase first)'; else recs[k] = data; }
+  for (const k in REC) { const { data, error } = await fetchAll(REC[k].table, ['id', ...REC[k].fields.map(f => f[0])].join(',')); if (error) recErr = error.message + ' (run supabase-records.sql in Supabase first)'; else recs[k] = data; }
   if (authed && !form && !rform && !certM) render();
 }
 sb.channel('recs-live').on('postgres_changes', { event: '*', schema: 'public', table: 'baby_dedications' }, loadRecs)
@@ -76,8 +76,25 @@ function exportRecs(k) {
 }
 
 // ---------- data (Supabase) ----------
+// Supabase sends at most 1000 rows per request, so load page by page: no limit on records.
+// The big birth-certificate pictures are NOT loaded here (they load only when a record is opened).
+const MEMBER_COLS = 'id,name,birthday,gender,phone,address,joined,status,photo';
+async function fetchAll(table, cols) {
+  const rows = [], size = 200;
+  for (let from = 0; ; from += size) {
+    const { data, error } = await sb.from(table).select(cols).order('id').range(from, from + size - 1);
+    if (error) return { data: null, error };
+    rows.push(...data); if (data.length < size) break;
+  }
+  return { data: rows, error: null };
+}
+async function loadBC(table, obj) {
+  if (!obj || 'birth_cert' in obj) return;
+  const { data, error } = await sb.from(table).select('birth_cert').eq('id', obj.id).maybeSingle();
+  if (!error && data) obj.birth_cert = data.birth_cert || '';
+}
 async function load() {
-  const { data, error } = await sb.from('members').select('*');
+  const { data, error } = await fetchAll('members', MEMBER_COLS);
   if (!error) { members = data; if (authed && !form && !rform && !certM) render(); }
 }
 sb.channel('members-live').on('postgres_changes', {event:'*', schema:'public', table:'members'}, load).subscribe();
@@ -136,6 +153,7 @@ const msg = (t, ok) => {
 // ---------- main render ----------
 function render() {
   document.body.classList.toggle('show-wm', !!authed && view === 'home' && !pubToken);
+  document.body.classList.toggle('has-nav', !!authed && !pubToken);
   if (pubToken) return renderPublicCert();
   if (!authed) return renderAuth();
   $('#sub').innerHTML = `Welcome, Admin · ${members.length} members · <span class="sync"><span class="cloud">☁️</span><i class="pulse"></i>Connected &amp; synced</span>`;
@@ -149,7 +167,7 @@ function render() {
     settings: '<path d="M4 7h10M18 7h2M4 17h2M10 17h10"/><circle cx="16" cy="7" r="2"/><circle cx="8" cy="17" r="2"/>'
   };
   $('#nav').innerHTML = [['home','Home'],['members','Membership'],['dedication','Dedication'],['baptism','Baptism'],['profile','Profile'],['settings','Settings']]
-    .map(([k,l]) => `<button data-v="${k}" class="${view===k?'on':''}"><span class="ni"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">${NAV_ICON[k]}</svg></span>${l}</button>`).join('');
+    .map(([k,l]) => `<button data-v="${k}" title="${l}" class="${view===k?'on':''}"><span class="ni"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">${NAV_ICON[k]}</svg></span><em class="nl">${l}</em></button>`).join('');
   let h = '';
   if (view === 'home') {
     const a = members.filter(m => m.status === 'Active').length;
@@ -296,7 +314,7 @@ function go(v) {
 document.addEventListener('click', async e => {
   const t = e.target, id = t.id;
   const nv = t.closest('[data-v]'); if (nv) { go(nv.dataset.v); return; }
-  const cd = t.closest('.m[data-id]'); if (cd) { sel = cd.dataset.id; confirmDel = false; renderSheet(); return; }
+  const cd = t.closest('.m[data-id]'); if (cd) { const mid = sel = cd.dataset.id; confirmDel = false; renderSheet(); const mm = members.find(x => x.id === mid); loadBC('members', mm).then(() => { if (sel === mid && !form && !certM) renderSheet(); }); return; }
   if (id === 'sheet' || id === 'close' || id === 'rclose') { sel = form = rsel = rform = certM = null; rconfirm = false; confirmDel = false; renderSheet(); }
   if (id === 'login') {
     if ($('#lu').value.trim() !== 'Admin') return msg('Incorrect username or password.');
@@ -319,7 +337,7 @@ document.addEventListener('click', async e => {
     if (error) return msg(error.message);
     ['cp0', 'cp1', 'cp2'].forEach(i => $('#' + i).value = ''); msg('Password updated.', true); }
   if (id === 'add') form = { isNew: true, id: nextId(), name: '', birthday: '', gender: 'Female', phone: '', address: '', joined: new Date().toISOString().slice(0, 10), status: 'Active', photo: '' }, renderSheet();
-  if (id === 'edit') { form = { ...members.find(x => x.id === sel) }; sel = null; renderSheet(); }
+  if (id === 'edit') { const mm = members.find(x => x.id === sel); await loadBC('members', mm); form = { ...mm }; sel = null; renderSheet(); }
   if (id === 'cancel') { form = null; renderSheet(); }
   if (id === 'del') { if (!confirmDel) { confirmDel = true; t.textContent = 'Tap to confirm'; return; } await removeMember(sel); sel = null; confirmDel = false; await load(); render(); toast('Member removed'); }
   if (id === 'saveb') { const g = i => $('#f_' + i).value.trim(), er = $('#err');
@@ -354,10 +372,10 @@ document.addEventListener('click', e => { const t = e.target;
 // ---------- records events ----------
 document.addEventListener('click', async e => {
   const t = e.target, id = t.id, k = view, c = REC[k];
-  const cd = t.closest('.m[data-rid]'); if (cd) { rsel = cd.dataset.rid; rconfirm = false; renderSheet(); return; }
+  const cd = t.closest('.m[data-rid]'); if (cd) { const rid = rsel = cd.dataset.rid; rconfirm = false; renderSheet(); const rr = recs[k] && recs[k].find(x => x.id === rid); if (c && rr) loadBC(c.table, rr).then(() => { if (rsel === rid && !rform && !certM) renderSheet(); }); return; }
   if (!c) return;
   if (id === 'radd') { rform = { isNew: true, id: rNextId(k), [c.dateKey]: new Date().toISOString().slice(0, 10) }; renderSheet(); }
-  if (id === 'redit') { rform = { ...recs[k].find(r => r.id === rsel) }; rsel = null; renderSheet(); }
+  if (id === 'redit') { const rr = recs[k].find(r => r.id === rsel); await loadBC(c.table, rr); rform = { ...rr }; rsel = null; renderSheet(); }
   if (id === 'rcancel') { rform = null; renderSheet(); }
   if (id === 'rdel') { if (!rconfirm) { rconfirm = true; t.textContent = 'Tap to confirm'; return; }
     await sb.from(c.table).delete().eq('id', rsel); rsel = null; rconfirm = false; await loadRecs(); render(); toast('Record removed'); }
