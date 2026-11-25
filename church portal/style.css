@@ -9,7 +9,7 @@ main{max-width:640px;margin:0 auto;padding:16px}
 header{background:linear-gradient(135deg,var(--deep),var(--pri));color:#fff;padding:18px 16px;border-radius:0 0 22px 22px}
 header h1{margin:0;font-size:20px}header p{margin:2px 0 0;opacity:.85;font-size:13px}
 .hd{max-width:640px;margin:0 auto}
-.card{background:var(--card);border-radius:16px;padding:14px;margin-bottom:12px;box-shadow:0 1px 4px rgba(8,126,155,.1)}
+.card{background:var(--card);border-radius:16px;padding:14px;margin-bottom:12px;box-shadow:0 1px 4px rgba(15,23,42,.1)}
 .stats{display:grid;grid-template-columns:1fr 1fr;gap:10px}
 .stat b{display:block;font-size:26px;color:var(--deep)}.stat span{color:var(--mut);font-size:13px}
 input,select{width:100%;padding:11px 12px;border:1px solid var(--line);border-radius:12px;background:var(--card);color:var(--txt);font-size:16px;font-family:inherit}
@@ -26,7 +26,7 @@ label{display:block;font-size:12px;color:var(--mut);margin:10px 0 4px}
 nav{position:fixed;left:0;right:0;bottom:0;background:var(--card);border-top:1px solid var(--line);display:flex;padding:6px 4px calc(6px + env(safe-area-inset-bottom,0px));z-index:5}
 nav button{flex:1;border:0;background:none;color:var(--mut);font-size:11px;padding:4px;cursor:pointer}
 nav button span{display:block;font-size:20px}nav button.on{color:var(--deep);font-weight:700}
-.fab{position:fixed;right:16px;bottom:calc(76px + env(safe-area-inset-bottom,0px));width:54px;height:54px;border-radius:50%;font-size:28px;padding:0;box-shadow:0 4px 12px rgba(8,126,155,.4);z-index:4}
+.fab{position:fixed;right:16px;bottom:calc(76px + env(safe-area-inset-bottom,0px));width:54px;height:54px;border-radius:50%;font-size:28px;padding:0;box-shadow:0 4px 12px rgba(15,23,42,.4);z-index:4}
 .sheet{position:fixed;inset:0;background:rgba(0,0,0,.45);z-index:9;display:flex;align-items:flex-end;justify-content:center}
 .sheet>div{background:var(--bg);width:100%;max-width:640px;max-height:92%;overflow:auto;border-radius:22px 22px 0 0;padding:16px}
 .kv{display:flex;justify-content:space-between;padding:9px 0;border-bottom:1px solid var(--line);font-size:14px;gap:12px}
@@ -77,7 +77,7 @@ header p#sub{animation-delay:.24s;--o:.85}
 /* Clean line icons for the bottom navigation */
 nav button .ni{display:grid;place-items:center;width:52px;height:30px;margin:0 auto 2px;border-radius:99px;transition:background .2s ease}
 nav button svg{width:24px;height:24px;transition:transform .2s ease}
-nav button.on .ni{background:rgba(20,184,166,.16)}
+nav button.on .ni{background:rgba(15,118,110,.16)}
 nav button.on svg{transform:translateY(-1px) scale(1.06)}
 nav button{transition:color .2s ease}
 
@@ -88,27 +88,27 @@ button{font-family:inherit}
 ::selection{background:var(--mint);color:#064e3b}
 
 /* buttons */
-.btn{overflow:hidden;transition:transform .14s ease,box-shadow .2s ease,filter .2s ease,background .2s ease;box-shadow:0 2px 6px rgba(8,126,155,.18)}
+.btn{overflow:hidden;transition:transform .14s ease,box-shadow .2s ease,filter .2s ease,background .2s ease;box-shadow:0 2px 6px rgba(15,23,42,.18)}
 .btn:not(.fab){position:relative}
 .btn.ghost,.btn.alt{box-shadow:none}
 .btn:active{transform:scale(.96);filter:brightness(.96)}
 .btn:disabled{opacity:.6;cursor:default}
-.btn:focus-visible,nav button:focus-visible{outline:3px solid rgba(20,184,166,.4);outline-offset:2px}
+.btn:focus-visible,nav button:focus-visible{outline:3px solid rgba(15,118,110,.4);outline-offset:2px}
 @media (hover:hover){
-  .btn:hover{filter:brightness(1.06);box-shadow:0 4px 12px rgba(8,126,155,.25)}
-  .btn.ghost:hover{background:rgba(20,184,166,.08)}
+  .btn:hover{filter:brightness(1.06);box-shadow:0 4px 12px rgba(15,23,42,.25)}
+  .btn.ghost:hover{background:rgba(15,118,110,.08)}
   .btn.alt:hover{filter:brightness(.97)}
 }
 
 /* inputs */
 input,select{transition:border-color .2s ease,box-shadow .2s ease,background .2s ease}
-input:focus,select:focus{outline:none;border-color:var(--pri);box-shadow:0 0 0 3px rgba(20,184,166,.22)}
+input:focus,select:focus{outline:none;border-color:var(--pri);box-shadow:0 0 0 3px rgba(15,118,110,.22)}
 
 /* cards */
 .card{transition:transform .18s ease,box-shadow .25s ease}
 .m{position:relative;overflow:hidden;-webkit-user-select:none;user-select:none}
 .m:active{transform:scale(.985)}
-@media (hover:hover){.m:hover{transform:translateY(-2px);box-shadow:0 6px 16px rgba(8,126,155,.16)}}
+@media (hover:hover){.m:hover{transform:translateY(-2px);box-shadow:0 6px 16px rgba(15,23,42,.16)}}
 
 /* press ripple */
 nav button{position:relative;overflow:hidden;border-radius:12px;transition:color .2s ease,transform .14s ease}
@@ -196,48 +196,92 @@ h2{font-size:20px;font-weight:600;letter-spacing:.2px}
 
 /* Logo watermark on the home page */
 .wm{position:fixed;left:50%;top:50%;width:min(78vw,540px);height:auto;transform:translate(-50%,-52%);opacity:0;pointer-events:none;-webkit-user-select:none;user-select:none;z-index:0;transition:opacity .7s ease}
-body.show-wm .wm{opacity:.09}
+body.show-wm .wm{opacity:.07}
 header{position:relative;z-index:2}
 main{position:relative;z-index:1}
 body.show-wm .card{background:color-mix(in srgb,var(--card) 82%,transparent)}
 @media (prefers-color-scheme:dark){:root:not([data-theme="light"]) .wm{filter:brightness(0) invert(1)}:root:not([data-theme="light"]) body.show-wm .wm{opacity:.08}}
 :root[data-theme="dark"] .wm{filter:brightness(0) invert(1)}
-/* goodbye animation after log out */
-.welcome.bye{background:linear-gradient(135deg,var(--pri),var(--deep))}
-.welcome.bye .w-tick{animation-duration:.6s}
-/* ===== Plain white theme: calm, clear, not distracting ===== */
-:root{--bg:#ffffff!important;--card:#ffffff!important;--txt:#1f2937!important;--mut:#5b6472!important;--pri:#0f766e!important;--deep:#0f766e!important;--mint:#e6f4f1!important;--line:#e5e7eb!important;color-scheme:light!important}
-body{font-family:system-ui,-apple-system,"Segoe UI",Roboto,Arial,sans-serif;font-size:16px;line-height:1.5;background:#fff;color:var(--txt)}
-h1.church-name,h2,.auth-title,.w-title{font-family:inherit!important}
-h2{font-size:19px;font-weight:600;color:#111827}
-.auth-title{color:#111827!important;font-weight:600}
 
-/* header: plain white with a thin line */
-header{background:#fff;color:#111827;border-radius:0;border-bottom:1px solid var(--line)}
-header h1.church-name{color:#111827;text-shadow:none;font-weight:700}
-header .portal{color:var(--deep)}
-header p#sub{color:var(--mut);opacity:1;border-top:1px solid var(--line)}
-.sync{background:#f3f4f6;color:#374151}
+/* ===== Navigation: bottom bar on phones, sliding side menu on wide screens ===== */
+nav button .nl{display:block;font-style:normal}
+@media (min-width:900px){
+  body{padding-bottom:28px}
+  body.has-nav{padding-left:76px}
+  nav{left:0;right:auto;top:0;bottom:0;width:76px;flex-direction:column;align-items:stretch;justify-content:flex-start;gap:6px;padding:24px 10px 16px;border-top:0;border-right:1px solid var(--line);overflow:hidden;transition:width .3s cubic-bezier(.2,.8,.2,1),box-shadow .3s ease}
+  nav:hover,nav:focus-within{width:232px;box-shadow:10px 0 30px rgba(15,23,42,.16)}
+  nav button{flex:none;display:flex;flex-direction:row;align-items:center;gap:14px;height:50px;padding:0 10px;border-radius:14px;font-size:14.5px;text-align:left;white-space:nowrap}
+  nav button .ni{margin:0;width:38px;height:38px;border-radius:12px;flex:none}
+  nav button .nl{opacity:0;transform:translateX(-8px);transition:opacity .2s ease,transform .28s ease}
+  nav:hover button .nl,nav:focus-within button .nl{opacity:1;transform:none;transition-delay:.06s}
+  nav button.on{background:rgba(15,118,110,.13)}
+  nav button.on .ni{background:transparent}
+  nav button.on::before{content:"";position:absolute;left:0;top:11px;bottom:11px;width:3px;border-radius:3px;background:var(--pri)}
+  @media (hover:hover){nav button:not(.on):hover{background:rgba(15,118,110,.08)}}
+  .fab{bottom:calc(28px + env(safe-area-inset-bottom,0px))}
+  .toast:not(.top){bottom:28px}
+  body.show-wm.has-nav .wm{left:calc(50% + 38px)}
+}
+@media (max-width:899px){nav button{font-size:10.5px;padding:4px 0;min-width:0}nav button.on{font-weight:600}}
+@media (max-width:899px){nav button{font-size:10px}nav button .nl{letter-spacing:-.1px}nav button .ni{width:46px}}
+@media (max-width:370px){nav button{font-size:9.5px}}
 
-/* cards, buttons, tags: flat and quiet */
-.card{box-shadow:none;border:1px solid var(--line)}
-body.show-wm .card{background:var(--card)}
-.btn{box-shadow:none}
-.btn.alt{background:#f3f4f6;color:#1f2937}
-.btn.ghost{color:var(--deep)}
-.av{background:var(--mint);color:#0f766e}
-.tag{background:var(--mint);color:#0f766e}
-.tag.Inactive{background:#f3f4f6;color:#6b7280}
-.tag.Visitor{background:#eef2ff;color:#3730a3}
-nav button.on .ni{background:var(--mint)}
-.fab{box-shadow:0 2px 8px rgba(0,0,0,.18)}
+/* ===== Plain white look + clear font ===== */
+:root{--bg:#ffffff}
+body,button,input,select{font-family:"Inter",system-ui,-apple-system,"Segoe UI",Roboto,sans-serif}
+h1.church-name,h2,.auth-title{font-family:inherit}
+h2{font-weight:700;letter-spacing:0}
+.auth-title{font-weight:700;font-size:23px;letter-spacing:0}
+header{background:var(--card);color:var(--txt);border-radius:0;border-bottom:1px solid var(--line)}
+header h1.church-name{color:var(--txt);text-shadow:none;font-weight:700;font-size:22px;letter-spacing:-.1px}
+header .portal{color:var(--deep);font-family:inherit;font-weight:600;letter-spacing:1.8px}
+header p#sub{color:var(--mut);border-top:1px solid var(--line)}
+.sync{background:rgba(15,118,110,.12);color:var(--deep)}
+.card{border:1px solid var(--line);box-shadow:0 1px 3px rgba(15,58,68,.06)}
+@media (max-width:420px){header h1.church-name{font-size:19px}}
 
-/* remove the faded logo and the motion */
-.wm,body.show-wm .wm{display:none!important}
-header .hd>*,.auth-logo,.fab,#app.enter,#app.enter .card{animation:none!important}
-header .hd>*{opacity:1}
-.sync .cloud{animation:none}
+/* ===== Same look as the approved login screen: neutral white, near-black text, deep teal ===== */
+:root{--txt:#111827;--mut:#5b6472;--pri:#0f766e;--deep:#0f766e;--mint:#d7efea;--line:#e5e7eb}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--pri:#14b8a6;--deep:#5eead4}}
+:root[data-theme="dark"]{--pri:#14b8a6;--deep:#5eead4}
+.auth-title{font-size:24px;font-weight:500;letter-spacing:.6px;color:var(--txt)}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]) .auth-title{color:var(--txt)}}
+.welcome{background:linear-gradient(135deg,#0b5f58,#0f766e)}
+.btn.alt,.av,.tag{color:#0b4f48}
+/* ===== Font cleanup: one clear font (Inter), readable sizes, even spacing ===== */
+:root{--font:"Inter",system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif}
+html{-webkit-text-size-adjust:100%}
+body,button,input,select,textarea{font-family:var(--font)}
+body{font-size:16px;line-height:1.5;font-weight:400;letter-spacing:0}
+h1,h2,h3,.auth-title,.w-title,.w-sub{font-family:var(--font)!important;letter-spacing:0!important}
 
-/* welcome / goodbye screens: plain white */
-.welcome,.welcome.bye{background:#fff;color:#1f2937}
-.w-check{stroke:var(--deep)}
+/* header */
+header h1.church-name{font-size:22px;font-weight:700;line-height:1.25}
+header .portal{font-size:12px;font-weight:600;letter-spacing:1.2px;text-transform:uppercase}
+header p#sub{font-size:13px;line-height:1.4}
+.sync{font-size:12.5px;font-weight:600}
+@media (max-width:420px){header h1.church-name{font-size:19px}}
+
+/* titles and text */
+h2{font-size:20px;font-weight:700;line-height:1.3}
+.auth-title{font-size:22px;font-weight:700}
+.m h3{font-size:16px;font-weight:600;line-height:1.3}
+.m small{font-size:13px}
+label{font-size:13px;font-weight:500}
+.kv{font-size:15px}
+.kv span{font-size:14px}
+.stat b{font-size:28px;font-weight:700;line-height:1.2}
+.stat span{font-size:14px}
+.bc.empty{font-size:14px}
+
+/* controls */
+input,select{font-size:16px;font-weight:400}
+.btn{font-size:15px;font-weight:600;letter-spacing:0}
+.tag{font-size:12px;font-weight:600}
+nav button{font-weight:500}
+nav button.on{font-weight:600}
+.toast{font-size:14px;font-weight:500}
+
+/* welcome / goodbye screen */
+.w-title{font-size:26px;font-weight:700}
+.w-sub{font-size:15px}
