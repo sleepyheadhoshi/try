@@ -205,3 +205,39 @@ body.show-wm .card{background:color-mix(in srgb,var(--card) 82%,transparent)}
 /* goodbye animation after log out */
 .welcome.bye{background:linear-gradient(135deg,var(--pri),var(--deep))}
 .welcome.bye .w-tick{animation-duration:.6s}
+/* ===== Plain white theme: calm, clear, not distracting ===== */
+:root{--bg:#ffffff!important;--card:#ffffff!important;--txt:#1f2937!important;--mut:#5b6472!important;--pri:#0f766e!important;--deep:#0f766e!important;--mint:#e6f4f1!important;--line:#e5e7eb!important;color-scheme:light!important}
+body{font-family:system-ui,-apple-system,"Segoe UI",Roboto,Arial,sans-serif;font-size:16px;line-height:1.5;background:#fff;color:var(--txt)}
+h1.church-name,h2,.auth-title,.w-title{font-family:inherit!important}
+h2{font-size:19px;font-weight:600;color:#111827}
+.auth-title{color:#111827!important;font-weight:600}
+
+/* header: plain white with a thin line */
+header{background:#fff;color:#111827;border-radius:0;border-bottom:1px solid var(--line)}
+header h1.church-name{color:#111827;text-shadow:none;font-weight:700}
+header .portal{color:var(--deep)}
+header p#sub{color:var(--mut);opacity:1;border-top:1px solid var(--line)}
+.sync{background:#f3f4f6;color:#374151}
+
+/* cards, buttons, tags: flat and quiet */
+.card{box-shadow:none;border:1px solid var(--line)}
+body.show-wm .card{background:var(--card)}
+.btn{box-shadow:none}
+.btn.alt{background:#f3f4f6;color:#1f2937}
+.btn.ghost{color:var(--deep)}
+.av{background:var(--mint);color:#0f766e}
+.tag{background:var(--mint);color:#0f766e}
+.tag.Inactive{background:#f3f4f6;color:#6b7280}
+.tag.Visitor{background:#eef2ff;color:#3730a3}
+nav button.on .ni{background:var(--mint)}
+.fab{box-shadow:0 2px 8px rgba(0,0,0,.18)}
+
+/* remove the faded logo and the motion */
+.wm,body.show-wm .wm{display:none!important}
+header .hd>*,.auth-logo,.fab,#app.enter,#app.enter .card{animation:none!important}
+header .hd>*{opacity:1}
+.sync .cloud{animation:none}
+
+/* welcome / goodbye screens: plain white */
+.welcome,.welcome.bye{background:#fff;color:#1f2937}
+.w-check{stroke:var(--deep)}
